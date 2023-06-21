@@ -1,11 +1,15 @@
 // spotify.js
-import {Buffer} from 'buffer';
+
 import axios from 'axios';
 
 const authEndpoint = 'https://accounts.spotify.com/api/token';
-const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
-const encodedCredentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+// const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+const clientId = '10d69cb846124cf6a3e16a19f4a86afa';
+// const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+const clientSecret = '561c37356d4b4667b87ce6f67d904edb';
+console.log(clientId, clientSecret)
+
+const encodedCredentials = btoa(`${clientId}:${clientSecret}`).toString('base64');
 
 async function getAccessToken() {
   const response = await axios.post(

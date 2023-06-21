@@ -13,7 +13,7 @@ export default function Playlist() {
         const fetchedPlaylist = await getPlaylist(playlistId);
         setPlaylist(fetchedPlaylist);
       } catch (error) {
-        console.error('Error fetching playlist:', error);
+        console.error('Error fetching playlist:', error.response.data);
       }
     }
 
