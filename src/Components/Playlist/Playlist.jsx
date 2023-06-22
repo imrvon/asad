@@ -11,6 +11,7 @@ export default function Playlist() {
       try {
         const playlistId = '0asnqXXmrSvDciDZlqa6wr';
         const fetchedPlaylist = await getPlaylist(playlistId);
+
         setPlaylist(fetchedPlaylist);
       } catch (error) {
         console.error('Error fetching playlist:', error.response.data);
@@ -29,7 +30,12 @@ export default function Playlist() {
       <h1>{playlist.name}</h1>
       <ul>
         {playlist.tracks.items.map((item) => (
-          <li key={item.track.id}>{item.track.name}</li>
+          <li key={item.track.id}>
+            {item.track.name}
+            <img src={item.track.album.images[0].url} alt="" />
+            
+            {console.log(item)}
+          </li>
         ))}
       </ul>
     </div>
