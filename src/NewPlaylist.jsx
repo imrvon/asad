@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const NewPlaylist = () => {
-    const clientId = '10d69cb846124cf6a3e16a19f4a86afa';
-    const clientSecret = '561c37356d4b4667b87ce6f67d904edb';
-    const playlistId = '0asnqXXmrSvDciDZlqa6wr';
+    const clientId = import.meta.env.VITE_CLIENT_ID;
+    const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
+    const playlistId = import.meta.env.VITE_PLAYLIST_ID;
+
+    // console.log('ClientId:', clientId)
   
     const [latestTrack, setLatestTrack] = useState(null);
   
@@ -46,6 +48,7 @@ const NewPlaylist = () => {
           });
 
           const playlist = response.data;
+          console.log(playlist)
 
             if (playlist.tracks && playlist.tracks.items.length > 0) {
                 const latestAddedTrack = playlist.tracks.items.reduce(
@@ -73,19 +76,26 @@ const NewPlaylist = () => {
             console.error('Error fetching playlist:', error);
             }
         };
-  
+        console.log('ClientId:', clientId)
       fetchLatestTrackFromPlaylist();
     }, []);
   
     return (
       <div>
         {latestTrack ? (
-          <div>
+          <div className='flex flex-col justify-center items-center mt-[5%]'>
             <h2>Latest Track:</h2>
             <p>Track Name: {latestTrack.name}</p>
             <p>Artist: {latestTrack.artists[0].name}</p>
-            <img src={latestTrack.album.images[0].url} alt="" />
-            {/* Render additional track details as needed */}
+            <img src={latestTrack.album.images[1].url} alt="" />
+            {console.log(latestTrack.preview_url)}
+            {latestTrack.preview_url && (
+              <audio controls>
+                <source src={latestTrack.preview_url} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            )}
+            <a href={latestTrack.external_urls.spotify}>Listen to Full Song</a>
           </div>
         ) : (
           <p>Loading latest track...</p>
