@@ -90,12 +90,12 @@ const NewPlaylist = () => {
             <img src={latestTrack.album.images[1].url} alt="" />
             {console.log(latestTrack.preview_url)}
             {latestTrack.preview_url && (
-              <audio controls>
+              <audio controls className='mt-[1%]'>
                 <source src={latestTrack.preview_url} type="audio/mpeg" />
                 Your browser does not support the audio element.
               </audio>
             )}
-            <a href={latestTrack.external_urls.spotify}>Listen to Full Song</a>
+            <a href={latestTrack.external_urls.spotify} className='text-white bg-green-500 py-[2%] px-[3%] rounded-[40px] mt-[1%]'>Listen to Full Song</a>
           </div>
         ) : (
           <p>Loading latest track...</p>
