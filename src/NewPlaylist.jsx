@@ -5,8 +5,6 @@ const NewPlaylist = () => {
     const clientId = import.meta.env.VITE_CLIENT_ID;
     const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
     const playlistId = import.meta.env.VITE_PLAYLIST_ID;
-
-    // console.log('ClientId:', clientId)
   
     const [latestTrack, setLatestTrack] = useState(null);
   
@@ -48,7 +46,6 @@ const NewPlaylist = () => {
           });
 
           const playlist = response.data;
-          console.log(playlist)
 
             if (playlist.tracks && playlist.tracks.items.length > 0) {
                 const latestAddedTrack = playlist.tracks.items.reduce(
@@ -76,29 +73,32 @@ const NewPlaylist = () => {
             console.error('Error fetching playlist:', error);
             }
         };
-        console.log('ClientId:', clientId)
+        
       fetchLatestTrackFromPlaylist();
     }, []);
   
     return (
-      <div>
+      <div className='mt-[5vh] sm:mt-[25vh]'>
+        <h1 className='text-5xl sm:text-7xl leading-[78px] text-center font-bold'>A S<span className='text-2xl'>ong</span> A D<span className='text-2xl'>ay</span></h1>
         {latestTrack ? (
-          <div className='flex flex-col justify-center items-center mt-[5%]'>
-            <h2>Latest Track:</h2>
-            <p>Track Name: {latestTrack.name}</p>
-            <p>Artist: {latestTrack.artists[0].name}</p>
-            <img src={latestTrack.album.images[1].url} alt="" />
-            {console.log(latestTrack.preview_url)}
-            {latestTrack.preview_url && (
-              <audio controls className='mt-[1%]'>
-                <source src={latestTrack.preview_url} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
-            )}
-            <a href={latestTrack.external_urls.spotify} className='text-white bg-green-500 py-[2%] px-[3%] rounded-[40px] mt-[1%]'>Listen to Full Song</a>
+          <div className='flex justify-between flex-col sm:flex-row items-center mt-[2%] sm:w-[90%] lg:w-[60%] mx-auto p-[2%] rounded-[40px] text-#191414 text-center'>
+            <div className='w-full p-[2%] sm:p-0 sm:w-[45%] mb-[10%] sm:mb-0'><img src={latestTrack.album.images[1].url} alt="" className='rounded-full inline-block'/></div>
+            <div className='w-full p-[2%] sm:p-0 sm:w-[50%]'>
+              <p className='text-lg'>{latestTrack.artists[0].name}</p>
+              <h2 className='text-4xl mb-[5%] font-bold text-[#1db954]'>{latestTrack.name}</h2>
+              <div className='mb-[5%]'>
+                {latestTrack.preview_url && (
+                  <audio controls className='mt-[1%] w-full'>
+                    <source src={latestTrack.preview_url} type="audio/mpeg" />
+                    <p>PREVIEW SONG</p>
+                  </audio>
+                )}
+              </div>
+              <a href={latestTrack.external_urls.spotify} className='text-white hover:bg-[#1ed760] bg-[#1db954] py-[3%] px-[5%] rounded-[40px] mt-[1%] inline-block w-full text-center text-xl'>Listen to Full Song</a>
+            </div>
           </div>
         ) : (
-          <p>Loading latest track...</p>
+          <p className='text-center'>Loading latest track...</p>
         )}
       </div>
     );
