@@ -78,7 +78,7 @@ const NewPlaylist = () => {
     }, []);
   
     return (
-      <div className='mt-[5vh] sm:mt-[25vh]'>
+      <div className='mt-[3vh] sm:mt-[25vh]'>
         <h1 className='text-5xl sm:text-7xl leading-[78px] text-center font-bold'>A S<span className='text-2xl'>ong</span> A D<span className='text-2xl'>ay</span></h1>
         {latestTrack ? (
           <div className='flex justify-between flex-col sm:flex-row items-center mt-[2%] sm:w-[90%] lg:w-[60%] mx-auto p-[2%] rounded-[40px] text-#191414 text-center'>
@@ -90,15 +90,14 @@ const NewPlaylist = () => {
                 {latestTrack.preview_url && (
                   <audio controls className='mt-[1%] w-full'>
                     <source src={latestTrack.preview_url} type="audio/mpeg" />
-                    <p>PREVIEW SONG</p>
                   </audio>
                 )}
               </div>
-              <a href={latestTrack.external_urls.spotify} className='text-white hover:bg-[#1ed760] bg-[#1db954] py-[3%] px-[5%] rounded-[40px] mt-[1%] inline-block w-full text-center text-xl'>Listen to Full Song</a>
+              <a href={latestTrack.external_urls.spotify} className='text-white hover:bg-[#1ed760] bg-[#1db954] py-[3%] px-[5%] rounded-[40px] my-[1%] inline-block w-full text-center text-xl'>Listen to Full Song</a>
             </div>
           </div>
         ) : (
-          <p className='text-center'>Loading latest track...</p>
+          <p className='text-center text-lg font-bold'>Loading latest track...</p>
         )}
       </div>
     );
