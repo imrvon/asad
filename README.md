@@ -36,7 +36,7 @@ For instance, if your playlist url is `https://open.spotify.com/playlist/fgapotn
 9. After you're done, run your server if you've not already done that and your playlist should start working.
 
 ### CAN I CONTRIBUTE? 👊
-I am totally open to contributions. These are some of the areas I feel can be improved on:
+I am totally open to contributions. You can create an [issue](https://github.com/imrvon/asad/issues) and then work on it. Then submit a PR to the dev branch. That is all you need to do.
 - The preview music player which is the default audio html tag. I would love for that to change.
 - Would love the track image to spin on play and stop on pause.
 - Design changes are also appreciated.
