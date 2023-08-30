@@ -100,7 +100,6 @@ const NewPlaylist = () => {
           <meta property="og:description" content="A song a day" />
           <meta property="og:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
 
-          
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="my-asad.netlify.app" />
           <meta property="twitter:url" content="https://my-asad.netlify.app" />

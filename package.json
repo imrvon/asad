@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "react-scripts build && react-snapshot",
+    "build": "vite build && react-snapshot",
     "preview": "vite preview"
   },
   "dependencies": {
