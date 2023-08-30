@@ -96,8 +96,16 @@ const NewPlaylist = () => {
           <meta property="og:url" content="https://my-asad.netlify.app" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="ASAD • A Song A Day" />
-          <meta property="og:description" content="A song a day." />
+          <meta property="og:description" content="A song a day" />
           <meta property="og:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
+
+          
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta property="twitter:domain" content="my-asad.netlify.app" />
+          <meta property="twitter:url" content="https://my-asad.netlify.app" />
+          <meta name="twitter:title" content="ASAD • A Song A Day" />
+          <meta name="twitter:description" content="A song a day" />
+          <meta name="twitter:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
           <link rel="canonical" href="/" />
       </Helmet>
       <div className="w-full">
