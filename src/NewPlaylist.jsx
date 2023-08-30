@@ -93,6 +93,8 @@ const NewPlaylist = () => {
       <Helmet>
           <title>ASAD • A Song A Day </title>
           <meta name="description" content="A song a day." />
+          <meta property="og:url" content="https://my-asad.netlify.app" />
+          <meta property="og:type" content="website" />
           <meta property="og:title" content="ASAD • A Song A Day" />
           <meta property="og:description" content="A song a day." />
           <meta property="og:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
