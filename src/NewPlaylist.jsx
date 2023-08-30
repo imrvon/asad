@@ -87,17 +87,7 @@ const NewPlaylist = () => {
 
     fetchLatestTrackFromPlaylist();
   }, []);
-
-  // Once latestTrack is available, update the og:image tag
-  useEffect(() => {
-    if (latestTrack) {
-      const metaTag = document.querySelector('meta[property="og:image"]');
-      // const metaTwitterTag = document.querySelector('meta[property="og:image"]');
-      if (metaTag) {
-        metaTag.content = latestTrack.album.images[1].url;
-      }
-    }
-  }, [latestTrack]);
+  
 
   return (
     <>
@@ -108,7 +98,7 @@ const NewPlaylist = () => {
           <meta property="og:type" content="website" />
           <meta property="og:title" content="ASAD • A Song A Day" />
           <meta property="og:description" content="A song a day" />
-          <meta property="og:image" content="" />
+          <meta property="og:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
 
           
           <meta name="twitter:card" content="summary_large_image" />
@@ -116,7 +106,7 @@ const NewPlaylist = () => {
           <meta property="twitter:url" content="https://my-asad.netlify.app" />
           <meta name="twitter:title" content="ASAD • A Song A Day" />
           <meta name="twitter:description" content="A song a day" />
-          <meta name="twitter:image" content="" />
+          <meta name="twitter:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
           <link rel="canonical" href="/" />
       </Helmet>
       <div className="w-full">
