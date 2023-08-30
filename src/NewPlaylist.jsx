@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { Helmet } from 'react-helmet-async';
 
 const NewPlaylist = () => {
   const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -88,7 +89,16 @@ const NewPlaylist = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <>
+      <Helmet>
+          <title>ASAD • A Song A Day </title>
+          <meta name="description" content="A song a day." />
+          <meta property="og:title" content="ASAD • A Song A Day" />
+          <meta property="og:description" content="A song a day." />
+          <meta property="og:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
+          <link rel="canonical" href="/" />
+      </Helmet>
+      <div className="w-full">
       <h1 className="text-5xl sm:text-7xl leading-[78px] text-center font-bold">
         A S<span className="text-2xl">ong</span> A D
         <span className="text-2xl">ay</span>
@@ -155,6 +165,8 @@ const NewPlaylist = () => {
         </div>
       )}
     </div>
+    </>
+    
   );
 };
 
