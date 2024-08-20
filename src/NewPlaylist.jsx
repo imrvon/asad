@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Helmet } from 'react-helmet-async';
 
@@ -43,11 +43,8 @@ const NewPlaylist = () => {
       }
     };
 
-    const fetchLatestTrackFromPlaylist = async () => {
-      const accessToken = await getAccessToken();
-      if (!accessToken) return;
-
-      const playlistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}`;
+    const fetchAllTracks = async (accessToken, offset = 0) => {
+      const playlistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?offset=${offset}&limit=100`;
 
       try {
         const response = await axios.get(playlistEndpoint, {
@@ -56,57 +53,66 @@ const NewPlaylist = () => {
           },
         });
 
-        const playlist = response.data;
-
-        if (playlist.tracks && playlist.tracks.items.length > 0) {
-          const latestAddedTrack = playlist.tracks.items.reduce(
-            (latestTrack, track) => {
-              if (
-                !latestTrack ||
-                new Date(track.added_at) > new Date(latestTrack.added_at)
-              ) {
-                return track;
-              }
-              return latestTrack;
-            },
-            null
-          );
-
-          if (latestAddedTrack) {
-            setLatestTrack(latestAddedTrack.track);
-          } else {
-            console.error("Unable to determine the latest track.");
-          }
+        const tracks = response.data.items;
+        if (response.data.next) {
+          return tracks.concat(await fetchAllTracks(accessToken, offset + 100));
         } else {
-          console.error("No tracks found in the playlist.");
+          return tracks;
         }
       } catch (error) {
-        console.error("Error fetching playlist:", error);
+        console.error("Error fetching playlist tracks:", error);
+        return [];
+      }
+    };
+
+    const fetchLatestTrackFromPlaylist = async () => {
+      const accessToken = await getAccessToken();
+      if (!accessToken) return;
+
+      const tracks = await fetchAllTracks(accessToken);
+
+      if (tracks.length > 0) {
+        const latestAddedTrack = tracks.reduce((latestTrack, track) => {
+          if (
+            !latestTrack ||
+            new Date(track.added_at) > new Date(latestTrack.added_at)
+          ) {
+            return track;
+          }
+          return latestTrack;
+        }, null);
+
+        if (latestAddedTrack) {
+          setLatestTrack(latestAddedTrack.track);
+        } else {
+          console.error("Unable to determine the latest track.");
+        }
+      } else {
+        console.error("No tracks found in the playlist.");
       }
     };
 
     fetchLatestTrackFromPlaylist();
   }, []);
-  
 
   return (
     <>
       <Helmet>
-          <title>ASAD • A Song A Day </title>
-          <meta name="description" content="A song a day." />
-          <meta property="og:url" content="https://my-asad.netlify.app" />
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content="ASAD • A Song A Day" />
-          <meta property="og:description" content="A song a day" />
-          <meta property="og:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
+        <title>ASAD • A Song A Day </title>
+        <meta name="description" content="A song a day." />
+        <meta property="og:url" content="https://my-asad.netlify.app" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="ASAD • A Song A Day" />
+        <meta property="og:description" content="A song a day" />
+        <meta property="og:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
 
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta property="twitter:domain" content="my-asad.netlify.app" />
-          <meta property="twitter:url" content="https://my-asad.netlify.app" />
-          <meta name="twitter:title" content="ASAD • A Song A Day" />
-          <meta name="twitter:description" content="A song a day" />
-          <meta name="twitter:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
-          <link rel="canonical" href="/" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="my-asad.netlify.app" />
+        <meta property="twitter:url" content="https://my-asad.netlify.app" />
+        <meta name="twitter:title" content="ASAD • A Song A Day" />
+        <meta name="twitter:description" content="A song a day" />
+        <meta name="twitter:image" content={latestTrack ? latestTrack.album.images[1].url : ''} />
+        <link rel="canonical" href="/" />
       </Helmet>
       <div className="w-full">
       <h1 className="text-5xl sm:text-7xl leading-[78px] text-center font-bold">
